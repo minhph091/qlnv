@@ -25,14 +25,14 @@ function AddUpdate() {
             temp.age = "Tuổi phải là số lớn hơn 0";
         }
 
-        // Lương
+
         if (!inputData.salary) {
             temp.salary = "Lương không được để trống";
         } else if (isNaN(inputData.salary) || Number(inputData.salary) < 0) {
             temp.salary = "Lương phải là số";
         }
 
-        // Địa chỉ
+
         if (!inputData.address.trim()) {
             temp.address = "Địa chỉ không được để trống";
         }
@@ -61,12 +61,12 @@ function AddUpdate() {
         if (id !== "-1") {
             axios.put("http://localhost:3000/employees/" + id, inputData).then((response) => {
                 alert("Cập nhật thành công !");
-                navigate("/");
+                navigate("/home");
             });
         } else {
             axios.post("http://localhost:3000/employees", inputData).then((response) => {
                 alert("Thêm mới thành công !");
-                navigate("/");
+                navigate("/home");
             });
         }
     };

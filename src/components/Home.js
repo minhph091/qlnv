@@ -7,10 +7,9 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 function Home() {
     const [data, setData] = useState([]);
-    const navigate = useNavigate();
     const idAdd = "-1";
 
-    const [detailData, setDetailData] = useState({});
+    const [checkbox, setCheckbox] = useState([]);
 
     function handleDelete(id) {
         const confirm = window.confirm(`Bạn có thực sự muốn xoá nhân viên có mã = ${id} ?`);
@@ -20,6 +19,28 @@ function Home() {
                 alert("Xoá thành công !");
                 axios.get("http://localhost:3000/employees").then((response) => setData(response.data));
             });
+    }
+
+    function handleCheckBox(id) {
+        if (!checkbox.includes(id)) {
+            checkbox.push(id);
+        } else {
+            let index = checkbox.findIndex((a) => a == id);
+            checkbox[index] = -1;
+        }
+        console.log(checkbox);
+    }
+    function deleteMany() {
+        const confirm = window.confirm(`Bạn có thực sự muốn xoá nhiều nhân viên có`);
+        if (confirm) {
+            checkbox.map((id) => {
+                if (id != -1) {
+                    axios.delete("http://localhost:3000/employees/" + id);
+                }
+                return 0;
+            });
+            axios.get("http://localhost:3000/employees").then((response) => setData(response.data));
+        }
     }
 
     useEffect(() => {
@@ -34,11 +55,22 @@ function Home() {
             <div className="container mt-5">
                 <h3>Quản Lý Nhân Viên</h3>
 
-                <Link to={`/update/${idAdd}`} className="btn btn-primary">Thêm mới nhân viên</Link>
+                <div class="menu-button">
+                    {" "}
+                    <Link to={`/update/${idAdd}`} className="btn btn-primary">
+                        Thêm mới nhân viên
+                    </Link>
+                    <button onClick={() => deleteMany()} className="btn btn-warning">
+                        Delete all
+                    </button>
+                </div>
 
                 <table className="table table-striped table-hover">
                     <thead>
                         <tr>
+                            <th>
+                                <input type="checkbox" />
+                            </th>
                             <th>ID</th>
                             <th>Họ Và Tên</th>
                             <th>Tuổi</th>
@@ -51,22 +83,27 @@ function Home() {
                     <tbody>
                         {data.map((d) => (
                             <tr key={d.id}>
+                                <td>
+                                    <input type="checkbox" name={d.id} id="" onClick={() => handleCheckBox(d.id)} />
+                                </td>
                                 <td>{d.id}</td>
                                 <td>{d.name}</td>
                                 <td>{d.age}</td>
                                 <td>{d.salary}</td>
                                 <td>{d.address}</td>
                                 <td>
-                                    <Link to={`/update/${d.id}`} className="btn btn-warning">Cập nhật</Link>
+                                    <Link to={`/update/${d.id}`} className="btn btn-warning">
+                                        Cập nhật
+                                    </Link>
 
-                                    <button onClick={() => handleDelete(d.id)} className="btn btn-danger">Xóa</button>
+                                    <button onClick={() => handleDelete(d.id)} className="btn btn-danger">
+                                        Xóa
+                                    </button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-
-   
             </div>
         </>
     );

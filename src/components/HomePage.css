@@ -1,0 +1,49 @@
+nav {
+    background: #333;
+    color: white;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 30px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+}
+
+.menu a:hover {
+    color: yellow;
+}
+
+.content {
+    display: flex;
+    min-height: 500px;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+}
+
+.banner {
+    background-color: #e4d9d9;
+    height: 15vh;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}

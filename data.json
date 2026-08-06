@@ -5,35 +5,42 @@
       "name": "Mai ngocf",
       "age": "31",
       "salary": "4500",
-      "address": "Settle"
+      "address": "Hà Nội"
     },
     {
-      "id": "2",
-      "name": "Tiểu Vy",
-      "age": "23",
-      "salary": "500",
-      "address": "Paris"
-    },
-    {
-      "id": "3",
-      "name": "Đặng Ngọc Hân",
-      "age": "28",
-      "salary": "3200",
-      "address": "Milan"
-    },
-    {
-      "id": "4",
-      "name": "Quỳnh Nga",
-      "age": "33",
+      "name": "Văn Trương",
+      "age": "43",
+      "address": "Miami",
       "salary": "2500",
-      "address": "New York"
+      "id": "DNBRgCWZz5c"
     },
     {
-      "id": "5",
-      "name": "Đỗ Mỹ inh",
-      "age": "26",
-      "salary": "3500",
-      "address": "New York"
+      "name": "Ngọc Lan",
+      "age": "43",
+      "address": "Miami",
+      "salary": "2500",
+      "id": "69sE6D086sg"
+    },
+    {
+      "name": "Larg Luvina",
+      "age": "43",
+      "address": "Hà Nội",
+      "salary": "4500",
+      "id": "veOTJJRpPVA"
+    },
+    {
+      "name": "Nguyễn Trần Khánh Vân",
+      "age": "43",
+      "address": "Hokkaidou",
+      "salary": "2500",
+      "id": "9AteDMCuMlk"
+    },
+    {
+      "name": "Larg Luvina",
+      "age": "31",
+      "address": "Miami",
+      "salary": "13000",
+      "id": "fXvW8UolW9g"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
