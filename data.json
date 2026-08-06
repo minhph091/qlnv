@@ -1,0 +1,40 @@
+{
+  "employees": [
+    {
+      "id": "1",
+      "name": "Mai ngocf",
+      "age": "31",
+      "salary": "4500",
+      "address": "Settle"
+    },
+    {
+      "id": "2",
+      "name": "Tiểu Vy",
+      "age": "23",
+      "salary": "500",
+      "address": "Paris"
+    },
+    {
+      "id": "3",
+      "name": "Đặng Ngọc Hân",
+      "age": "28",
+      "salary": "3200",
+      "address": "Milan"
+    },
+    {
+      "id": "4",
+      "name": "Quỳnh Nga",
+      "age": "33",
+      "salary": "2500",
+      "address": "New York"
+    },
+    {
+      "id": "5",
+      "name": "Đỗ Mỹ inh",
+      "age": "26",
+      "salary": "3500",
+      "address": "New York"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

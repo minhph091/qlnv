@@ -1,0 +1,14 @@
+th,
+td,
+h2 {
+    text-align: center;
+}
+
+.detail th,
+.detail td {
+    text-align: left;
+}
+
+.title {
+    font-weight: bold;
+}
