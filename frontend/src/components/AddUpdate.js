@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "./AddUpdate.css";
+import { BASE_URL } from "../config";
 function AddUpdate() {
     const { id } = useParams();
     const [inputData, setInputData] = useState({
@@ -25,13 +26,11 @@ function AddUpdate() {
             temp.age = "Tuổi phải là số lớn hơn 0";
         }
 
-
         if (!inputData.salary) {
             temp.salary = "Lương không được để trống";
         } else if (isNaN(inputData.salary) || Number(inputData.salary) < 0) {
             temp.salary = "Lương phải là số";
         }
-
 
         if (!inputData.address.trim()) {
             temp.address = "Địa chỉ không được để trống";
@@ -47,7 +46,7 @@ function AddUpdate() {
     useEffect(() => {
         if (id !== "-1") {
             axios
-                .get("http://localhost:3000/employees/" + id)
+                .get(BASE_URL +"/" + id)
                 .then((response) => setInputData(response.data))
                 .catch((error) => console.log(error));
         }
@@ -59,12 +58,12 @@ function AddUpdate() {
             return;
         }
         if (id !== "-1") {
-            axios.put("http://localhost:3000/employees/" + id, inputData).then((response) => {
+            axios.put(BASE_URL +"/" + id, inputData).then((response) => {
                 alert("Cập nhật thành công !");
                 navigate("/home");
             });
         } else {
-            axios.post("http://localhost:3000/employees", inputData).then((response) => {
+            axios.post(BASE_URL, inputData).then((response) => {
                 alert("Thêm mới thành công !");
                 navigate("/home");
             });
@@ -134,7 +133,7 @@ function AddUpdate() {
                     <button type="submit" className="btn btn-primary me-2">
                         Submit
                     </button>
-                    <Link to="/" className="btn btn-warning">
+                    <Link to="/home" className="btn btn-warning">
                         Cancel
                     </Link>
                 </form>

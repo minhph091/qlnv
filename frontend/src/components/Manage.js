@@ -1,51 +1,70 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./Home.css";
+import "./Manage.css";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-
-function Home() {
+import { BASE_URL } from "../config"
+export default function Home() {
     const [data, setData] = useState([]);
     const idAdd = "-1";
-
+    let [isSelectAll, setIsSelectAll] = useState(false)
     const [checkbox, setCheckbox] = useState([]);
+
+    useEffect(() => {
+        console.log("Danh sách checkbox:", checkbox);
+    }, [checkbox]);
 
     function handleDelete(id) {
         const confirm = window.confirm(`Bạn có thực sự muốn xoá nhân viên có mã = ${id} ?`);
 
         if (confirm)
-            axios.delete("http://localhost:3000/employees/" + id).then((response) => {
+            axios.delete(BASE_URL + "/" + id).then((response) => {
                 alert("Xoá thành công !");
-                axios.get("http://localhost:3000/employees").then((response) => setData(response.data));
+                axios.get(BASE_URL).then((response) => setData(response.data));
             });
     }
 
-    function handleCheckBox(id) {
-        if (!checkbox.includes(id)) {
-            checkbox.push(id);
+    function handleCheckBox(id, isChecked) {
+
+        if (isChecked) {
+            setCheckbox(checkbox => [...checkbox, id])
         } else {
-            let index = checkbox.findIndex((a) => a == id);
-            checkbox[index] = -1;
+            setCheckbox(checkbox => checkbox.filter(element => element !== id));
         }
-        console.log(checkbox);
+
     }
-    function deleteMany() {
-        const confirm = window.confirm(`Bạn có thực sự muốn xoá nhiều nhân viên có`);
-        if (confirm) {
-            checkbox.map((id) => {
-                if (id != -1) {
-                    axios.delete("http://localhost:3000/employees/" + id);
-                }
-                return 0;
-            });
-            axios.get("http://localhost:3000/employees").then((response) => setData(response.data));
+    async function deleteMany() {
+        if (checkbox.length == 0) {
+            window.confirm(`Vui lòng chọn nhiều nhân viên`)
+            return;
+        };
+        const confirmDelete = window.confirm(`Bạn có thực sự muốn xoá nhiều nhân viên có`);
+        if (confirmDelete) {
+            await Promise.all(
+                checkbox.map(id =>
+                    axios.delete(BASE_URL + "/" + id))
+                )
+
+            const response = await axios.get(BASE_URL)
+            setData(response.data)
+            setCheckbox([])
         }
+    }
+
+    function selectAll() {
+        const allElement = document.querySelectorAll('.employee');
+        allElement.forEach(element => {
+            element.checked = !isSelectAll;
+            handleCheckBox(element.name, !isSelectAll)
+        })
+        isSelectAll = setIsSelectAll(!isSelectAll);
+
     }
 
     useEffect(() => {
         axios
-            .get("http://localhost:3000/employees")
+            .get(BASE_URL)
             .then((response) => setData(response.data))
             .catch((error) => console.log(error));
     }, []);
@@ -55,7 +74,7 @@ function Home() {
             <div className="container mt-5">
                 <h3>Quản Lý Nhân Viên</h3>
 
-                <div class="menu-button">
+                <div className="menu-button">
                     {" "}
                     <Link to={`/update/${idAdd}`} className="btn btn-primary">
                         Thêm mới nhân viên
@@ -69,14 +88,14 @@ function Home() {
                     <thead>
                         <tr>
                             <th>
-                                <input type="checkbox" />
+                                <input type="checkbox" className="text-center" onClick={() => selectAll()} />
                             </th>
-                            <th>ID</th>
-                            <th>Họ Và Tên</th>
-                            <th>Tuổi</th>
-                            <th>Lương</th>
-                            <th>Quê Quán</th>
-                            <th>Thao Tác</th>
+                            <th className="text-center">ID</th>
+                            <th className="text-center">Họ Và Tên</th>
+                            <th className="text-center">Tuổi</th>
+                            <th className="text-center">Lương</th>
+                            <th className="text-center">Quê Quán</th>
+                            <th className="text-center">Thao Tác</th>
                         </tr>
                     </thead>
 
@@ -84,7 +103,7 @@ function Home() {
                         {data.map((d) => (
                             <tr key={d.id}>
                                 <td>
-                                    <input type="checkbox" name={d.id} id="" onClick={() => handleCheckBox(d.id)} />
+                                    <input type="checkbox" name={d.id} id="" className="employee" onChange={(e) => handleCheckBox(d.id, e.target.checked)} />
                                 </td>
                                 <td>{d.id}</td>
                                 <td>{d.name}</td>
@@ -92,7 +111,7 @@ function Home() {
                                 <td>{d.salary}</td>
                                 <td>{d.address}</td>
                                 <td>
-                                    <Link to={`/update/${d.id}`} className="btn btn-warning">
+                                    <Link to={`/update/${d.id}`} className="btn btn-warning me-2">
                                         Cập nhật
                                     </Link>
 
@@ -108,5 +127,3 @@ function Home() {
         </>
     );
 }
-
-export default Home;

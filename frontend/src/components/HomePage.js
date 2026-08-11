@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import Home from "./Home";
+import Home from "./Manage";
 import "./HomePage.css";
 export default function HomePage() {
     return (
